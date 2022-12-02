@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
 
     const posts = await postlist.find().toArray()
-    await res.status(200).send(posts)
+    return res.status(200).send(posts)
   
   }
 
@@ -40,8 +40,8 @@ export default async function handler(req, res) {
       date: new Date()
     }
 
-    postlist.insertOne(newPost)
-    res.status(200).send("Sucess")
+    await postlist.insertOne(newPost)
+    return res.status(200).send("Sucess")
   
   }
 
@@ -50,8 +50,9 @@ export default async function handler(req, res) {
   
     const { uuid } = req.body
     const deleted = await postlist.findOneAndDelete({ _id: ObjectId(uuid) })
-    res.status(200).send("Deleted")
+    return res.status(200).send("Deleted")
 
   }
   
+  return res.status(200).send("ok")
 }
