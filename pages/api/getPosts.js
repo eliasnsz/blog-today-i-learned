@@ -28,31 +28,4 @@ export default async function handler(req, res) {
   
   }
 
-
-  if (req.method === "POST") {
-
-    const { title, body, author} = req.body
-
-    const newPost = {
-      title,
-      body,
-      author,
-      date: new Date()
-    }
-
-    await postlist.insertOne(newPost)
-    return res.status(200).send("Sucess")
-  
-  }
-
-
-  if (req.method === "DELETE") {
-  
-    const { uuid } = req.body
-    const deleted = await postlist.findOneAndDelete({ _id: ObjectId(uuid) })
-    return res.status(200).send("Deleted")
-
-  }
-  
-  return res.status(200).send("ok")
 }
