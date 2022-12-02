@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
 
     const posts = await postlist.find().toArray()
-    return res.status(200).send(posts)
+    return res.status(200).send(JSON.parse(posts))
   
   }
 
