@@ -1,4 +1,4 @@
-import { OrderedList, ListItem, Text, Skeleton, Center  } from "@chakra-ui/react"
+import { OrderedList, ListItem, Text, SkeletonText, Center  } from "@chakra-ui/react"
 import Link from "next/link";
 import useFetch from "../../hooks/useFetch";
 
