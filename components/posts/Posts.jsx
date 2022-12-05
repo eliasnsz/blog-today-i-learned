@@ -1,4 +1,4 @@
-import { OrderedList, ListItem, Text, SkeletonText, Center  } from "@chakra-ui/react"
+import { OrderedList, ListItem, Text, SkeletonText, Center, Box  } from "@chakra-ui/react"
 import Link from "next/link";
 import useFetch from "../../hooks/useFetch";
 
@@ -42,36 +42,36 @@ export default function Posts() {
         fontSize={16}
       >
       
-      {!isFetching && postsQuantity <= 0 && false && <Center mt="60px" color={"gray"}> Nenhuma publicação encontrada!.</Center>}
+      {!isFetching && postsQuantity <= 0 && <Center mt="60px" color={"gray"}> Nenhuma publicação encontrada!</Center>}
 
-      <Box padding='6' boxShadow='lg' bg='white'>
-        <SkeletonText isLoaded={!isFetching} mt='4' noOfLines={postsQuantity} spacing='4' skeletonHeight='2' />
-      </Box>
+      <SkeletonText isLoaded={!isFetching} noOfLines={postsQuantity} spacing='4' skeletonHeight='10'>
 
-      {!isFetching && posts.slice().reverse().map(post => {
-        return (
-          
-          <ListItem key={post._id}>
-            <Link href={`/post/${post._id}`}>
+        {!isFetching && posts.slice().reverse().map(post => {
+          return (
+            
+            <ListItem key={post._id}>
+              <Link href={`/post/${post._id}`}>
+                <Text
+                  _hover={{
+                    textDecoration: "underline"
+                  }}
+                >{post.title}</Text>
+              </Link>
               <Text
-                _hover={{
-                  textDecoration: "underline"
-                }}
-              >{post.title}</Text>
-            </Link>
-            <Text
-              color="gray.500"
-              fontWeight="400"
-              fontSize={12}
-              letterSpacing={0.3}
-            >
-              { (post.author || "Anônimo") + " · " + formattedData(post.date)}
-            </Text>
-          </ListItem>
+                color="gray.500"
+                fontWeight="400"
+                fontSize={12}
+                letterSpacing={0.3}
+              >
+                { (post.author || "Anônimo") + " · " + formattedData(post.date)}
+              </Text>
+            </ListItem>
+            
+            )
+          })}
           
-          )
-        })}
-        
+        </SkeletonText>
+
       </OrderedList>
     </div>  
   )
