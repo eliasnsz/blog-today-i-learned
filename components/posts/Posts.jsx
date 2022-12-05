@@ -4,7 +4,7 @@ import useFetch from "../../hooks/useFetch";
 
 export default function Posts() {
 
-  const { data: posts, isFetching } = useFetch('api/getPosts')
+  const { data: posts, isFetching, postsQuantity } = useFetch('api/getPosts')
 
   const formattedData = date => {
     const currentDate = new Date()
@@ -41,31 +41,33 @@ export default function Posts() {
         fontWeight={600}
         fontSize={16}
       >
+      
+      {!isFetching && postsQuantity <= 0 && false && <Center mt="60px" color={"gray"}> Nenhuma publicação encontrada!.</Center>}
 
-      {!isFetching && posts.length <= 0 && false && <Center mt="60px" color={"gray"}> Nenhuma publicação encontrada!.</Center>}
+      <Box padding='6' boxShadow='lg' bg='white'>
+        <SkeletonText isLoaded={!isFetching} mt='4' noOfLines={postsQuantity} spacing='4' skeletonHeight='2' />
+      </Box>
 
       {!isFetching && posts.slice().reverse().map(post => {
         return (
           
-            <Skeleton isLoaded={!isFetching}>
-              <ListItem key={post._id}>
-                <Link href={`/post/${post._id}`}>
-                  <Text
-                    _hover={{
-                      textDecoration: "underline"
-                    }}
-                  >{post.title}</Text>
-                </Link>
-                <Text
-                  color="gray.500"
-                  fontWeight="400"
-                  fontSize={12}
-                  letterSpacing={0.3}
-                >
-                  { (post.author || "Anônimo") + " · " + formattedData(post.date)}
-                </Text>
-              </ListItem>
-            </Skeleton>
+          <ListItem key={post._id}>
+            <Link href={`/post/${post._id}`}>
+              <Text
+                _hover={{
+                  textDecoration: "underline"
+                }}
+              >{post.title}</Text>
+            </Link>
+            <Text
+              color="gray.500"
+              fontWeight="400"
+              fontSize={12}
+              letterSpacing={0.3}
+            >
+              { (post.author || "Anônimo") + " · " + formattedData(post.date)}
+            </Text>
+          </ListItem>
           
           )
         })}
