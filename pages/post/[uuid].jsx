@@ -1,5 +1,5 @@
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Box, Heading, Text, Flex, Divider, Tag } from "@chakra-ui/react";
+import { Box, Heading, Text, Flex, Divider, Tag , Skeleton } from "@chakra-ui/react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Header from "../../components/header/Header";
@@ -65,7 +65,7 @@ export default function Post() {
         </Flex>
         <Divider borderColor="#00000032" my="10px"/>
         <Text>
-          {thisPost.body}`
+          {thisPost.body}
         </Text>
       </Box>
     </div>

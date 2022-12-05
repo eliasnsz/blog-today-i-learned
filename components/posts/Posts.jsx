@@ -1,4 +1,4 @@
-import { OrderedList, ListItem, Text, Skeleton, Stack, Center  } from "@chakra-ui/react"
+import { OrderedList, ListItem, Text, Skeleton, Center  } from "@chakra-ui/react"
 import Link from "next/link";
 import useFetch from "../../hooks/useFetch";
 
@@ -42,28 +42,30 @@ export default function Posts() {
         fontSize={16}
       >
 
-      {!isFetching && !posts.length && <Center mt="60px" color={"gray"}> Nenhuma publicação encontrada!.</Center>}
+      {!isFetching && posts.length <= 0 && false && <Center mt="60px" color={"gray"}> Nenhuma publicação encontrada!.</Center>}
 
       {!isFetching && posts.slice().reverse().map(post => {
         return (
           
-            <ListItem key={post._id}>
-              <Link href={`/post/${post._id}`}>
+            <Skeleton isLoaded={!isFetching}>
+              <ListItem key={post._id}>
+                <Link href={`/post/${post._id}`}>
+                  <Text
+                    _hover={{
+                      textDecoration: "underline"
+                    }}
+                  >{post.title}</Text>
+                </Link>
                 <Text
-                  _hover={{
-                    textDecoration: "underline"
-                  }} 
-                >{post.title}</Text>
-              </Link>
-              <Text
-                color="gray.500"
-                fontWeight="400"
-                fontSize={12}
-                letterSpacing={0.3}
-              >
-                { (post.author || "Anônimo") + " · " + formattedData(post.date)}
-              </Text>
-            </ListItem>
+                  color="gray.500"
+                  fontWeight="400"
+                  fontSize={12}
+                  letterSpacing={0.3}
+                >
+                  { (post.author || "Anônimo") + " · " + formattedData(post.date)}
+                </Text>
+              </ListItem>
+            </Skeleton>
           
           )
         })}
